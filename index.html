@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM Qiskit Fall Fest 2026 | University of Uyo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #161616;
+            --bg-surface: #262626;
+            --bg-surface-hover: #393939;
+            --qiskit-blue: #0f62fe;
+            --qiskit-blue-hover: #0043ce;
+            --text-primary: #f4f4f4;
+            --text-secondary: #c6c6c6;
+            --border-color: #393939;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background-color: var(--bg-base); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        /* HEADER */
+        header { background-color: rgba(22, 22, 22, 0.95); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; padding: 1rem 0; backdrop-filter: blur(10px); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-logo { height: 40px; width: auto; pointer-events: none; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-primary); text-decoration: none; font-weight: 400; font-size: 0.9rem; transition: color 0.2s ease; }
+        .nav-links a:hover { color: var(--qiskit-blue); }
+
+        /* HERO & PERSONA TOGGLE */
+        .hero { padding: 5rem 0; border-bottom: 1px solid var(--border-color); text-align: center; }
+        .hero-banner { max-width: 100%; width: 600px; height: auto; margin-bottom: 2rem; pointer-events: none; }
+        .mono-badge { display: inline-block; font-family: var(--font-mono); color: var(--qiskit-blue); background: rgba(15, 98, 254, 0.1); padding: 0.25rem 0.75rem; border: 1px solid var(--qiskit-blue); font-size: 0.85rem; margin: 0 0.5rem 1.5rem 0; text-transform: uppercase; }
+        
+        .persona-toggle { display: inline-flex; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 30px; margin: 2rem 0; overflow: hidden; }
+        .toggle-btn { background: transparent; color: var(--text-secondary); border: none; padding: 0.75rem 1.5rem; font-family: var(--font-mono); font-size: 0.85rem; cursor: pointer; transition: 0.3s ease; }
+        .toggle-btn.active { background: var(--qiskit-blue); color: #ffffff; }
+        .persona-view { display: none; font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 2.5rem auto; text-align: left; }
+        .persona-view.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* BUTTONS & TIMER */
+        .btn { display: inline-block; padding: 1rem 2rem; font-family: var(--font-mono); font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background-color: var(--qiskit-blue); color: #ffffff; }
+        .btn-primary:hover { background-color: var(--qiskit-blue-hover); }
+
+        .countdown-container { display: flex; justify-content: center; gap: 1.5rem; margin: 3rem 0; font-family: var(--font-mono); }
+        .time-box { background: var(--bg-surface); padding: 1rem; border: 1px solid var(--border-color); border-radius: 4px; text-align: center; min-width: 90px; }
+        .time-number { font-size: 2.2rem; color: var(--qiskit-blue); font-weight: 600; display: block; }
+        .time-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* SECTIONS & GRID */
+        .section-padding { padding: 5rem 0; border-bottom: 1px solid var(--border-color); }
+        .section-header { font-family: var(--font-mono); color: var(--qiskit-blue); text-transform: uppercase; margin-bottom: 3rem; font-size: 1rem; display: flex; align-items: center; gap: 1rem; }
+        .section-header::after { content: ""; height: 1px; background-color: var(--border-color); flex-grow: 1; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+
+        /* SCHEDULE CARDS WITH ACCORDION */
+        .card { background-color: var(--bg-surface); padding: 2.5rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .expand-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.4s ease; opacity: 0; }
+        .expand-content.open { max-height: 800px; margin-top: 1.5rem; opacity: 1; }
+        .expand-btn { background: none; border: none; color: var(--qiskit-blue); font-family: var(--font-mono); font-size: 0.85rem; cursor: pointer; text-transform: uppercase; text-align: left; padding: 0; margin-top: auto; display: flex; align-items: center; gap: 0.5rem; }
+        .expand-btn::after { content: "▼"; font-size: 0.7rem; transition: 0.3s; }
+        .expand-btn.active::after { transform: rotate(180deg); }
+
+        /* SPEAKER CARDS */
+        .speaker-card { background-color: var(--bg-surface); border: 1px solid var(--border-color); padding: 2rem; text-align: center; transition: 0.3s; }
+        .speaker-card:hover { border-color: var(--qiskit-blue); transform: translateY(-5px); }
+        .speaker-img { width: 100px; height: 100px; border-radius: 50%; background-color: var(--border-color); margin: 0 auto 1.5rem auto; border: 2px solid var(--qiskit-blue); object-fit: cover; }
+        .speaker-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .speaker-title { color: var(--qiskit-blue); font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .speaker-org { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* FOOTER */
+        footer { background-color: var(--bg-surface); padding: 4rem 0; text-align: center; border-top: 1px solid var(--qiskit-blue); }
+        .footer-logos { display: flex; justify-content: center; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+        .footer-logos img { height: 45px; }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .countdown-container { flex-wrap: wrap; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-content">
+            <img src="logo.png" alt="Qiskit Logo" class="header-logo" onerror="this.style.display='none'">
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#schedule">Schedule</a>
+                <a href="#speakers">Speakers</a>
+                <a href="#register">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="about" class="hero container">
+        <img src="banner.png" alt="Qiskit Fall Fest 2026" class="hero-banner" onerror="this.style.display='none'">
+        
+        <div>
+            <span class="mono-badge">Nov 2 - 21, 2026</span>
+            <span class="mono-badge" style="border-color: #8a3ffc; color: #8a3ffc; background: rgba(138, 63, 252, 0.1);">Hybrid Event</span>
+        </div>
+
+        <div class="persona-toggle">
+            <button class="toggle-btn active" id="btn-student" onclick="switchPersona('student')">Undergraduate / Learner</button>
+            <button class="toggle-btn" id="btn-pro" onclick="switchPersona('pro')">Researcher / Professional</button>
+        </div>
+
+        <!-- Student Persona View -->
+        <div id="view-student" class="persona-view active">
+            <p>Welcome to the quantum realm. If you are used to the classical computing world of absolute zeros and ones, prepare for your intuition to decohere just a bit upon entry.</p>
+            <p style="margin-top: 1rem;">The IBM Qiskit Fall Fest at the University of Uyo is your safe space to step into the weird, fascinating universe of quantum technology. We are not here to make magical promises about the future; we are here to explore how nature actually computes at the fundamental level. Whether you are a seasoned student or someone whose probability of asking "What is a qubit?" currently approaches 1, this event is built for you. We will entangle ideas, transpile your curiosity into real code, and prove that quantum mechanics is something you can build with today. Your probability of leaving without loving quantum computing approaches 0.</p>
+        </div>
+
+        <!-- Professional Persona View -->
+        <div id="view-pro" class="persona-view">
+            <p>Quantum computing represents the next major paradigm shift in computational science. The IBM Qiskit Fall Fest at the University of Uyo is designed to bridge the gap between theoretical physics and applied quantum algorithms.</p>
+            <p style="margin-top: 1rem;">Whether you are a postgraduate researcher, faculty member, or industry professional, this event provides the advanced resources to translate classical expertise into quantum utility. Engage with cutting-edge state mechanics, Python structural programming, and algorithmic implementation using the Qiskit framework to advance Nigeria’s footprint in the global quantum ecosystem.</p>
+        </div>
+
+        <div class="countdown-container" id="timer-display">
+            <div class="time-box"><span class="time-number" id="days">00</span><span class="time-label">Days</span></div>
+            <div class="time-box"><span class="time-number" id="hours">00</span><span class="time-label">Hours</span></div>
+            <div class="time-box"><span class="time-number" id="mins">00</span><span class="time-label">Mins</span></div>
+            <div class="time-box"><span class="time-number" id="secs">00</span><span class="time-label">Secs</span></div>
+        </div>
+
+        <a href="#register" class="btn btn-primary">Reserve Your Seat</a>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule" class="section-padding container">
+        <div class="section-header">01 // Event Schedule</div>
+        <div class="grid-2">
+            
+            <div class="card">
+                <span class="mono-badge" style="background: transparent;">Nov 2 - 8 | Hybrid</span>
+                <h3>Pre-Workshop Series</h3>
+                
+                <!-- Dynamic summary based on persona -->
+                <p class="persona-schedule student-schedule active" style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Think of this as your quantum boot camp. We are taking the heavy math and physics and diagonalizing the confusion so you can build a solid foundation before the main event kicks off.
+                </p>
+                <p class="persona-schedule pro-schedule" style="display: none; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    A rigorous technical onboarding designed to build foundational proficiency.
+                </p>
+
+                <div id="content-1" class="expand-content">
+                    <div class="persona-schedule student-schedule active" style="color: var(--text-secondary); line-height: 1.8;">
+                        Over the course of a week, we will guide you from absolute beginner to writing your first quantum circuits. We start with a Python Crash Course so everyone shares the same coding language. Then, we transition into QBronze and an Introduction to Quantum Mechanics to help your brain adjust to the physics without the overwhelm. Once things start clicking, we jump into Quantum Computing 101 and Qiskit 101. By the end of the week, you will be tackling Quantum Algorithms, Simulation, and Optimization. This is a safe space to ask questions, make mistakes, and minimize energy while learning together.
+                    </div>
+                    <div class="persona-schedule pro-schedule" style="display: none; color: var(--text-secondary); line-height: 1.8;">
+                        This week-long hybrid intensive covers state mechanics via QBronze, structural Python programming for quantum environments, and algorithmic implementation using the Qiskit framework.
+                    </div>
+                </div>
+                <button class="expand-btn" onclick="toggleSchedule('content-1', this)">Show More</button>
+            </div>
+
+            <div class="card">
+                <span class="mono-badge" style="background: transparent; border-color: #8a3ffc; color: #8a3ffc;">Nov 17 - 21 | Hybrid</span>
+                <h3>Main Fall Fest Event</h3>
+                
+                <!-- Dynamic summary based on persona -->
+                <p class="persona-schedule student-schedule active" style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    This is where your new skills collapse into reality. Aligning with IBM Qiskit's global mission, this hybrid event focuses on taking your foundational theory and running it on actual quantum frameworks.
+                </p>
+                <p class="persona-schedule pro-schedule" style="display: none; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    A focused hybrid symposium and development sprint.
+                </p>
+
+                <div id="content-2" class="expand-content">
+                    <div class="persona-schedule student-schedule active" style="color: var(--text-secondary); line-height: 1.8;">
+                        We have redesigned the Fall Fest this year to be a sandbox for every discipline, not just physics or computer science majors. You will collaborate, compete in beginner-friendly challenges, and hear directly from leading voices in the field. This is an environment to test your limits, build projects, and maybe even prove a classical assumption wrong one line of code at a time. You will take the tools you learned in the pre-workshop and use them to solve curated challenges alongside a community of incredibly curious minds.
+                    </div>
+                    <div class="persona-schedule pro-schedule" style="display: none; color: var(--text-secondary); line-height: 1.8;">
+                        Collaborate with peers on IBM-curated hardware challenges, explore complex optimization problems, and network with leading representatives from IBM and the Northern Quantum Initiative to advance Nigeria’s quantum computing footprint.
+                    </div>
+                </div>
+                <button class="expand-btn" onclick="toggleSchedule('content-2', this)">Show More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section id="speakers" class="section-padding container">
+        <div class="section-header">02 // Speakers & Leadership</div>
+        <div class="grid-4">
+            
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <div class="speaker-name">Ini Ekpenyong Ukut</div>
+                <div class="speaker-title">Host & Speaker</div>
+                <div class="speaker-org">QNigeria</div>
+            </div>
+
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <div class="speaker-name">Oluwasegun Babalola-JacobS David</div>
+                <div class="speaker-org">Founder, Northern Quantum Initiative</div>
+            </div>
+
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <div class="speaker-name">Prof. Ime Essien</div>
+                <div class="speaker-title">Speaker</div>
+                <div class="speaker-org">HOD Physics, UniUyo</div>
+            </div>
+
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <div class="speaker-name">Dr. Bliss Stephen</div>
+                <div class="speaker-title">Speaker</div>
+                <div class="speaker-org">HOD Computer Engineering, UniUyo</div>
+            </div>
+
+            <div class="speaker-card" style="opacity: 0.7;">
+                <div class="speaker-img" style="background: transparent;"></div>
+                <div class="speaker-name">TBA</div>
+                <div class="speaker-title">Guest Speaker</div>
+                <div class="speaker-org">QNigeria Representative</div>
+            </div>
+
+            <div class="speaker-card" style="opacity: 0.7;">
+                <div class="speaker-img" style="background: transparent;"></div>
+                <div class="speaker-name">TBA</div>
+                <div class="speaker-title">Guest Speaker</div>
+                <div class="speaker-org">AQC Representative</div>
+            </div>
+
+            <div class="speaker-card" style="opacity: 0.7;">
+                <div class="speaker-img" style="background: transparent;"></div>
+                <div class="speaker-name">TBA</div>
+                <div class="speaker-title">Opening Address</div>
+                <div class="speaker-org">Dean of Science, UniUyo</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- REGISTRATION -->
+    <section id="register" class="section-padding container">
+        <div class="section-header">03 // Registration</div>
+        <div style="background-color: var(--bg-surface); padding: 4rem; text-align: center; border: 1px solid var(--border-color);">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Secure Your Admission</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                Space for the physical workshops is highly limited. 
+            </p>
+            <div style="border: 1px dashed var(--qiskit-blue); background: rgba(15, 98, 254, 0.05); padding: 3rem; color: var(--qiskit-blue); font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                Registration Opening Soon
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logos">
+                <img src="logo.png" alt="Qiskit Logo" onerror="this.style.display='none'">
+                <img src="uniuyo.jpeg" alt="University of Uyo Logo" onerror="this.style.display='none'">
+            </div>
+            
+            <div style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                <strong>Venue Host:</strong> University of Uyo<br>
+                Department of Physics & Computer Engineering<br>
+                PMB 1017, Uyo, Akwa Ibom State, Nigeria
+            </div>
+            
+            <div style="color: #666; font-size: 0.8rem; margin-top: 2rem;">
+                © 2026 Qiskit Fall Fest - University of Uyo.<br>
+                Organized by Ini Ekpenyong Ukut for QNigeria.<br>
+                Built in adherence with official IBM Qiskit Brand Guidelines.
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPTS -->
+    <script>
+        // 1. Countdown Timer Logic
+        const targetDate = new Date("Nov 17, 2026 09:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("timer-display").innerHTML = "<h3 style='color: var(--qiskit-blue);'>The Fall Fest is Live!</h3>";
+                return;
+            }
+
+            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("mins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        // 2. Persona Toggle Logic
+        function switchPersona(persona) {
+            // Main Hero Text Toggle
+            document.getElementById('btn-student').classList.remove('active');
+            document.getElementById('btn-pro').classList.remove('active');
+            document.getElementById('view-student').classList.remove('active');
+            document.getElementById('view-pro').classList.remove('active');
+            
+            document.getElementById('btn-' + persona).classList.add('active');
+            document.getElementById('view-' + persona).classList.add('active');
+
+            // Schedule Summaries Toggle
+            const studentSchedules = document.querySelectorAll('.student-schedule');
+            const proSchedules = document.querySelectorAll('.pro-schedule');
+            
+            if (persona === 'student') {
+                studentSchedules.forEach(el => el.style.display = 'block');
+                proSchedules.forEach(el => el.style.display = 'none');
+            } else {
+                studentSchedules.forEach(el => el.style.display = 'none');
+                proSchedules.forEach(el => el.style.display = 'block');
+            }
+        }
+
+        // 3. Expandable Schedule Accordion Logic
+        function toggleSchedule(contentId, btnElement) {
+            const content = document.getElementById(contentId);
+            content.classList.toggle('open');
+            btnElement.classList.toggle('active');
+            
+            if (content.classList.contains('open')) {
+                btnElement.innerHTML = 'Show Less';
+            } else {
+                btnElement.innerHTML = 'Show More';
+            }
+        }
+    </script>
+</body>
+</html>
