@@ -78,7 +78,7 @@
         /* SPEAKER CARDS */
         .speaker-card { background-color: var(--bg-surface); border: 1px solid var(--border-color); padding: 2rem; text-align: center; transition: 0.3s; }
         .speaker-card:hover { border-color: var(--qiskit-blue); transform: translateY(-5px); }
-        .speaker-img { width: 100px; height: 100px; border-radius: 50%; background-color: var(--border-color); margin: 0 auto 1.5rem auto; border: 2px solid var(--qiskit-blue); object-fit: cover; }
+        .speaker-img { width: 100px; height: 100px; border-radius: 50%; background-color: var(--border-color); margin: 0 auto 1.5rem auto; border: 2px solid var(--qiskit-blue); object-fit: cover; display: block; }
         .speaker-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.25rem; }
         .speaker-title { color: var(--qiskit-blue); font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
         .speaker-org { color: var(--text-secondary); font-size: 0.9rem; }
@@ -223,41 +223,55 @@
         <div class="section-header">03 // Speakers & Leadership</div>
         <div class="grid-4">
             
+            <!-- Host: Ini Ekpenyong Ukut -->
             <div class="speaker-card">
-                <div class="speaker-img"></div>
+                <img src="Host Picture.jpg" alt="Ini Ekpenyong Ukut" class="speaker-img" onerror="this.style.background='var(--border-color)'">
                 <div class="speaker-name">Ini Ekpenyong Ukut</div>
                 <div class="speaker-title">Host & Speaker</div>
                 <div class="speaker-org">QNigeria Organizer</div>
             </div>
 
+            <!-- Founder NQI: Babalola-Jacobs Oluwasegun David -->
             <div class="speaker-card">
-                <div class="speaker-img"></div>
+                <img src="Founder Northern Quantum Initiative (NQI).jpg" alt="Babalola-Jacobs Oluwasegun David" class="speaker-img" onerror="this.style.background='var(--border-color)'">
                 <div class="speaker-name">Babalola-Jacobs Oluwasegun David</div>
                 <div class="speaker-title">Speaker</div>
                 <div class="speaker-org">Founder, Northern Quantum Initiative</div>
             </div>
 
+            <!-- IBM Speaker: Fred Ochieng Otieno -->
             <div class="speaker-card">
-                <div class="speaker-img"></div>
-                <div class="speaker-name">Prof. Ime Essien</div>
-                <div class="speaker-title">Speaker</div>
-                <div class="speaker-org">HOD Physics, UniUyo</div>
+                <div class="speaker-img" style="background: transparent;"></div>
+                <div class="speaker-name">Fred Ochieng Otieno</div>
+                <div class="speaker-title">IBM Quantum Rep</div>
+                <div class="speaker-org">IBM Quantum</div>
             </div>
 
+            <!-- Computer Engineering HOD: Dr. Bliss Stephen -->
             <div class="speaker-card">
-                <div class="speaker-img"></div>
+                <div class="speaker-img" style="background: transparent;"></div>
                 <div class="speaker-name">Dr. Bliss Stephen</div>
                 <div class="speaker-title">Speaker</div>
                 <div class="speaker-org">HOD Computer Engineering, UniUyo</div>
             </div>
 
-            <div class="speaker-card" style="opacity: 0.7;">
-                <div class="speaker-img" style="background: transparent;"></div>
-                <div class="speaker-name">TBA</div>
-                <div class="speaker-title">Guest Speaker</div>
-                <div class="speaker-org">QNigeria Representative</div>
+            <!-- Computer Engineering Rep: Abasiene Etuk -->
+            <div class="speaker-card">
+                <img src="Abasiene Etuk.jpg" alt="Abasiene Etuk" class="speaker-img" onerror="this.style.background='var(--border-color)'">
+                <div class="speaker-name">Abasiene Etuk</div>
+                <div class="speaker-title">Speaker</div>
+                <div class="speaker-org">Computer Engineering, UniUyo</div>
             </div>
 
+            <!-- Physics HOD: Prof. Ime Essien -->
+            <div class="speaker-card">
+                <div class="speaker-img" style="background: transparent;"></div>
+                <div class="speaker-name">Prof. Ime Essien</div>
+                <div class="speaker-title">Speaker</div>
+                <div class="speaker-org">HOD Physics, UniUyo</div>
+            </div>
+
+            <!-- AQC Rep -->
             <div class="speaker-card" style="opacity: 0.7;">
                 <div class="speaker-img" style="background: transparent;"></div>
                 <div class="speaker-name">TBA</div>
@@ -265,6 +279,7 @@
                 <div class="speaker-org">AQC Representative</div>
             </div>
 
+            <!-- Opening Address -->
             <div class="speaker-card" style="opacity: 0.7;">
                 <div class="speaker-img" style="background: transparent;"></div>
                 <div class="speaker-name">TBA</div>
